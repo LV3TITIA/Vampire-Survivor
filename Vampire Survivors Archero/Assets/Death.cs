@@ -1,39 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
-public class Attack : StateMachineBehaviour
+public class Death : StateMachineBehaviour
 {
-    [SerializeField]
-    private float _speed;
-    [SerializeField]
-    private Rigidbody2D _RgbD2;
+
+
 
     private void Awake()
     {
-    //    _RgbD2.gameObject.GetComponent<Rigidbody2D>();
+        
     }
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        Rigidbody2D _rg = animator.gameObject.GetComponent<Rigidbody2D>();
+        _rg.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+      
 
     }
 
-
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
+        Destroy(animator.gameObject);
+
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -46,4 +45,6 @@ public class Attack : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+
+    //private Rigidbody2D _enemyPrefab;
 }
